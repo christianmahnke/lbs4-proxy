@@ -1,6 +1,5 @@
 package de.unigoettingen.sub.be.ous.lbs4.proxy.filters.javascript.rewrite
 
-import com.google.javascript.jscomp.AbstractCompiler
 import com.google.javascript.jscomp.NodeTraversal
 import com.google.javascript.jscomp.SourceFile
 import com.google.javascript.rhino.Node
@@ -29,7 +28,6 @@ class RewriteContainer {
 
     public String rewrite(SourceFile sf) {
         Node node = ClosureCompilerUtils.parse(sf)
-        String result = ''
 
         for (r in rewriter) {
             NodeTraversal.traverse(ClosureCompilerUtils.getCompiler(), node, r)
