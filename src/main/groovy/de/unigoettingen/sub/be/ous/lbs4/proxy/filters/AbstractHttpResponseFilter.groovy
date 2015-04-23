@@ -23,12 +23,14 @@ import java.util.regex.Matcher
 @CompileStatic
 abstract class AbstractHttpResponseFilter extends AbstractFilter implements HttpResponseFilter {
 
-    AbstractHttpResponseFilter (String url) {
+    AbstractHttpResponseFilter(String url) {
         super(url)
     }
 
     public static FullHttpResponse updateResponse(FullHttpResponse resp, String content) {
-        ByteBuf c = Unpooled.wrappedBuffer(content.getBytes())
+        Charset charset = findCharset(content)
+        //Readd content in declared Charset
+        ByteBuf c = Unpooled.wrappedBuffer(content.getBytes(charset))
         HttpVersion v = resp.protocolVersion
         HttpResponseStatus s = resp.getStatus()
         FullHttpResponse response = new DefaultFullHttpResponse(v, s, c)
@@ -43,11 +45,12 @@ abstract class AbstractHttpResponseFilter extends AbstractFilter implements Http
         return response
     }
 
-    public static String getContent (FullHttpResponse fhr) {
-        return fhr.content().toString(Charset.defaultCharset())
+    public static String getContent(FullHttpResponse fhr) {
+        Charset charset = findCharset(fhr.content().toString(Charset.defaultCharset()))
+        return fhr.content().toString(charset)
     }
 
-    protected HttpRequest updateHttpRequest(HttpRequest req, String uri){
+    protected HttpRequest updateHttpRequest(HttpRequest req, String uri) {
         HttpMethod m = req.getMethod()
         HttpVersion v = req.getProtocolVersion()
         return new DefaultHttpRequest(v, m, uri)
@@ -59,5 +62,23 @@ abstract class AbstractHttpResponseFilter extends AbstractFilter implements Http
         return updateResponse(fhr, content)
     }
 
-    abstract String filter (String str)
+    protected static Charset findCharset(String str) {
+        //Convert into UTF-8 for internal processing
+        String charset = null
+        for (String l : str.readLines()) {
+            if (l.contains('charset=')) {
+                charset = l.replaceAll('.*charset=([\\w-]*).*', '$1')
+                log.debug("Got content in charset ${charset}")
+            }
+        }
+        if (charset == null) {
+            return Charset.defaultCharset()
+        } else if (Charset.isSupported(charset)) {
+            return Charset.forName(charset)
+        } else {
+            throw new IllegalStateException("Charset ${charset} is not supported")
+        }
+    }
+
+    abstract String filter(String str)
 }

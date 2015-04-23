@@ -30,13 +30,9 @@ class PrependContentFilter extends RegExContentFilter {
     }
 
     @Override
-    FullHttpResponse filter(HttpRequest request, FullHttpResponse fhr) {
-        String content = getContent(fhr)
-        log.trace("Checking content (${search}):\n${content}")
+    String filter (String content) {
         Matcher m = contentPattern.matcher(content)
-        String result = m.replaceAll(replacement + replacementSuffix)
-        log.trace("Result of replacement(${replacement + replacementSuffix}):\n${result}")
-        return updateResponse(fhr, result)
+        return m.replaceAll(replacement + replacementSuffix)
     }
 
 }
