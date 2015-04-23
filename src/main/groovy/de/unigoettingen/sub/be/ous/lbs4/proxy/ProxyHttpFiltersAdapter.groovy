@@ -68,12 +68,6 @@ class ProxyHttpFiltersAdapter extends HttpFiltersAdapter {
         return httpObject;
     }
 
-
-    private String getContext() {
-        return "${originalRequest.getMethod().name()} ${originalRequest.getUri()}"
-        //ctx
-    }
-
     protected String filter(HttpRequest req) {
         for (f in filters) {
             if (f instanceof URLFilter && f.matches(req)) {

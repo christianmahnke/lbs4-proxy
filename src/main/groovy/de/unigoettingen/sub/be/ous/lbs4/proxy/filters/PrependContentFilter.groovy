@@ -2,6 +2,7 @@ package de.unigoettingen.sub.be.ous.lbs4.proxy.filters
 
 import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
+
 import io.netty.handler.codec.http.FullHttpResponse
 import io.netty.handler.codec.http.HttpRequest
 

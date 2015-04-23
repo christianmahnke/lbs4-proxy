@@ -1,19 +1,11 @@
 package de.unigoettingen.sub.be.ous.lbs4.proxy.filters
 
-import com.google.javascript.jscomp.AbstractCompiler
-import com.google.javascript.jscomp.Compiler
-import com.google.javascript.jscomp.CompilerOptions
-import com.google.javascript.jscomp.JSSourceFile
-import com.google.javascript.jscomp.NodeTraversal
-import com.google.javascript.jscomp.Result
-import com.google.javascript.jscomp.SourceFile
-import com.google.javascript.rhino.Node
 import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.javascript.rewrite.BaseRewrite
 import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.javascript.rewrite.RewriteContainer
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.javascript.rewrite.WindowNavigateRewrite
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.javascript.util.ClosureCompilerUtils
+
 import groovy.transform.TypeChecked
 import groovy.util.logging.Log4j
+
 import io.netty.handler.codec.http.FullHttpResponse
 import io.netty.handler.codec.http.HttpRequest
 

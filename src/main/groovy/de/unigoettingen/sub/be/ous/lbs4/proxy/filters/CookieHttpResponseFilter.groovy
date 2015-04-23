@@ -17,7 +17,6 @@ import java.util.regex.Pattern
 class CookieHttpResponseFilter extends AbstractFilter implements HttpResponseFilter {
     Tuple2<String, String> rewrite
 
-
     CookieHttpResponseFilter(String url, Tuple2<String, String> rewrite) {
         super(url)
         this.rewrite = rewrite

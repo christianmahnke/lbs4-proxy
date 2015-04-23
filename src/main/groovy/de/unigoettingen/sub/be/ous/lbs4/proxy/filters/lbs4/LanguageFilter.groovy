@@ -2,6 +2,7 @@ package de.unigoettingen.sub.be.ous.lbs4.proxy.filters.lbs4
 
 import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.AbstractFilter
 import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.URLFilter
+
 import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 

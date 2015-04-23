@@ -28,23 +28,8 @@ class FilterContainer extends AbstractHttpResponseFilter implements URLFilter, H
         URI u = new URL(url).toURI()
         this.scheme = u.getScheme()
         this.host = u.getHost()
+        log.trace("Set up container for Base ${url}")
     }
-
-    /*
-    FilterContainer(String scheme, String host, String port, String path) {
-        this.scheme = scheme
-        this.host = host
-        this.port = port
-        this.path = path
-        log.trace("Set up filtering container for ${scheme}${host}:${port}${path}")
-    }
-
-    FilterContainer(String scheme, String host) {
-        this.scheme = scheme
-        this.host = host
-        log.trace("Set up filtering container for ${scheme}${host}")
-    }
-    */
 
 
     public void addFilter(Filter f) {
@@ -62,18 +47,6 @@ class FilterContainer extends AbstractHttpResponseFilter implements URLFilter, H
         if (!requestUri.startsWith("${scheme}://${host}")) {
             return false
         }
-        /*
-        else {
-            //Check for optional port and path settings
-            if (port != null && path != null && !request.getUri().startsWith("${scheme}${host}:${port}${path}")) {
-                return false
-            } else if (port == null && path != null && !request.getUri().startsWith("${scheme}${host}:${path}")) {
-                return false
-            } else if (port != null && path == null && !request.getUri().startsWith("${scheme}${host}:${port}")) {
-                return false
-            }
-        }
-        */
         log.trace('Match found, trying other filters')
         //Try the filters from the internal list
         for (f in filters) {
