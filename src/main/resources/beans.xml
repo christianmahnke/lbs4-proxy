@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="baseUrl" class="java.lang.String">
-        <constructor-arg value="http://xgoe.gbv.de:9090/lbs4/"></constructor-arg>
+        <constructor-arg value="http://xgoe.gbv.de:9090/lbs4/"/>
     </bean>
 
     <bean id="proxyConfigBean" class="de.unigoettingen.sub.be.ous.lbs4.proxy.ProxyConfig" init-method="init">

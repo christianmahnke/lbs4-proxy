@@ -34,8 +34,6 @@ class ProxyConfig {
         addFilters()
     }
 
-
-    //TODO: Move this out off here -> Spring
     void addFilters() {
         if (filters.get(0) instanceof FilterContainer) {
             FilterContainer fc = filters.get(0)
