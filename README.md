@@ -27,7 +27,7 @@ To build a packaged version just run:
 > mvn package
 
 ## Runing directly from Maven
-To run the proxy directly from surces just call:
+To run the proxy directly from sources just call:
 > mvn clean compile exec:exec
 
 ## Configuration
@@ -36,3 +36,10 @@ You can set the port the proxy listens to and the filter options there.
 
 ## Setting up your browser
 To use the proxy server you need to point your browser to it, this is done in the network settings of your browser, without changes to the configuration of the proxy it listens to localhost:8080.
+
+# Status
+Currently the proxy allows one to log into the LBS4 Client, seletion of the requested subsystem  and shows the counter if the OUS module is selected.
+
+## TODO
+* Rewrite CSS to get rid of deprecated CSS expressions
+* Get the LBS4 menu running
