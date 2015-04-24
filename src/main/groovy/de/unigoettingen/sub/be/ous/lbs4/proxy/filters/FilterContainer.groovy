@@ -57,11 +57,6 @@ class FilterContainer extends AbstractHttpResponseFilter implements URLFilter, H
     }
 
     @Override
-    String getMatchIdentifier() {
-        return '*'
-    }
-
-    @Override
     String filter(final HttpRequest request) {
         log.trace('FilterContainer looping over URLFilters')
         HttpRequest hr = request
