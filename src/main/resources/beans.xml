@@ -15,8 +15,14 @@
                     <constructor-arg ref="baseUrl"/>
 
                     <property name="filters">
+                        <!--
+                        Regular expressions in here do not need escaped back slashes! \\ -> \
+                        -->
                         <list value-type="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.Filter">
-                            <!-- RegExContentFilter gcf1 = new RegExContentFilter('^.*lbs4.html$', '^(.{340}).{240}(.*)$', '$1$2') -->
+                            <!--
+                            Cuts the browser check out, was:
+                            RegExContentFilter gcf1 = new RegExContentFilter('^.*lbs4.html$', '^(.{340}).{240}(.*)$', '$1$2')
+                            -->
                             <bean class="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.RegExContentFilter">
                                 <constructor-arg value="^.*lbs4.html$"/>
                                 <!--
@@ -33,7 +39,10 @@
                                 <constructor-arg value="var loadScriptor = &quot;0&quot;;"/>
                             </bean>
 
-                            <!-- RegExContentFilter gcf2 = new RegExContentFilter('^.*lbs4.html$', '^(.*)var lng = window.navigator.systemLanguage;(.*)$', '$1var lng = window.navigator.systemLanguage || window.navigator.language;$2') -->
+                            <!--
+                            Replaces the language getter with a expression for other browsers, was:
+                            RegExContentFilter gcf2 = new RegExContentFilter('^.*lbs4.html$', '^(.*)var lng = window.navigator.systemLanguage;(.*)$', '$1var lng = window.navigator.systemLanguage || window.navigator.language;$2')
+                            -->
                             <bean class="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.RegExContentFilter">
                                 <constructor-arg value="^.*lbs4.html$"/>
                                 <constructor-arg value="^(.*)window.navigator.systemLanguage(.*)$"/>
@@ -41,21 +50,30 @@
                                         value="$1window.navigator.systemLanguage || window.navigator.language$2"/>
                             </bean>
 
-                            <!-- RegExContentFilter gcf3 = new RegExContentFilter('^.*login_.*$', '//xgoe\\.gbv\\.de:9600/servlet/lbsInfo', '//xgoe\\.gbv\\.de:9090/servlet/lbsInfo') -->
+                            <!--
+                            Replaces the URL for the Jaguar servlet with a proxy URL to avoid same orgin issues, was:
+                            RegExContentFilter gcf3 = new RegExContentFilter('^.*login_.*$', '//xgoe\\.gbv\\.de:9600/servlet/lbsInfo', '//xgoe\\.gbv\\.de:9090/servlet/lbsInfo')
+                            -->
                             <bean class="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.RegExContentFilter">
                                 <constructor-arg value="^.*login_.*$" type="java.lang.String"/>
                                 <constructor-arg value="//xgoe\.gbv\.de:9600/servlet/lbsInfo" type="java.lang.String"/>
                                 <constructor-arg value="//xgoe\.gbv\.de:9090/servlet/lbsInfo" type="java.lang.String"/>
                             </bean>
 
-                            <!-- RequestRewriteFilter rrf = new RequestRewriteFilter('^http://xgoe.gbv.de:9090/servlet.*$', '^http://xgoe.gbv.de:9090/servlet(.*)$', 'http://xgoe.gbv.de:9600/servlet$1') -->
+                            <!--
+                            Maps request URLs to the Jaguar Servlet to the right port (9600), was:
+                            RequestRewriteFilter rrf = new RequestRewriteFilter('^http://xgoe.gbv.de:9090/servlet.*$', '^http://xgoe.gbv.de:9090/servlet(.*)$', 'http://xgoe.gbv.de:9600/servlet$1')
+                            -->
                             <bean class="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.RequestRewriteFilter">
                                 <constructor-arg value="^http://xgoe.gbv.de:9090/servlet.*$" type="java.lang.String"/>
                                 <constructor-arg value="^http://xgoe.gbv.de:9090/servlet(.*)$" type="java.lang.String"/>
                                 <constructor-arg value="http://xgoe.gbv.de:9600/servlet$1" type="java.lang.String"/>
                             </bean>
 
-                            <!-- CookieHttpResponseFilter chrf = new CookieHttpResponseFilter('^http://xgoe.gbv.de.*$', new Tuple2<String, String>('servletUrl=http%3A%2F%2Fxgoe.gbv.de%3A9600', 'servletUrl=http%3A%2F%2Fxgoe.gbv.de%3A9090')) -->
+                            <!--
+                            Rewrites the Cookie with the Jaguar servlet URL to te proxy to avoid same orgin issues, was:
+                            CookieHttpResponseFilter chrf = new CookieHttpResponseFilter('^http://xgoe.gbv.de.*$', new Tuple2<String, String>('servletUrl=http%3A%2F%2Fxgoe.gbv.de%3A9600', 'servletUrl=http%3A%2F%2Fxgoe.gbv.de%3A9090'))
+                            -->
                             <bean class="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.CookieHttpResponseFilter">
                                 <constructor-arg value="^http://xgoe.gbv.de.*$"/>
                                 <constructor-arg>
@@ -66,7 +84,10 @@
                                 </constructor-arg>
                             </bean>
 
-                            <!-- JavaScriptContentFilter jscf = new JavaScriptContentFilter('^.*\\.js$') -->
+                            <!--
+                            This is the rewrite from Internet Explorer JavaScript to JAvaScript of other browsers, was:
+                            JavaScriptContentFilter jscf = new JavaScriptContentFilter('^.*\\.js$')
+                            -->
                             <bean class="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.JavaScriptContentFilter">
                                 <constructor-arg value="^.*\.js$"/>
                                 <property name="rewriter">
@@ -87,11 +108,23 @@
                                 </property>
                             </bean>
 
-                            <!-- ffc.addFilter(new LanguageFilter('en', 'de')) -->
+                            <!--
+                            This maps request URLs for language pattern "en" to "de", was:
+                            ffc.addFilter(new LanguageFilter('en', 'de'))
+                            -->
                             <bean class="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.lbs4.LanguageFilter">
                                 <constructor-arg value="en"/>
                                 <constructor-arg value="de"/>
                             </bean>
+
+                            <!-- CssFilter cf = new CssFilter('\'^http://xgoe.gbv.de:9090.*\\.css$') -->
+                            <!--
+                            <bean class="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.CssFilter">
+                                <constructor-arg value="^http://xgoe.gbv.de.*\.css"/>
+                                <constructor-arg></constructor-arg>
+                            </bean>
+                            -->
+
                         </list>
                     </property>
                 </bean>

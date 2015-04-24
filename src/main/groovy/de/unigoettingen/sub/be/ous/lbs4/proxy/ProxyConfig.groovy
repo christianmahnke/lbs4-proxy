@@ -1,16 +1,8 @@
 package de.unigoettingen.sub.be.ous.lbs4.proxy
 
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.CookieHttpResponseFilter
 import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.CssFilter
 import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.Filter
 import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.FilterContainer
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.JavaScriptContentFilter
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.RegExContentFilter
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.RequestRewriteFilter
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.javascript.rewrite.AddEventListenerRewrite
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.javascript.rewrite.WindowEventRewrite
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.javascript.rewrite.WindowNavigateRewrite
-import de.unigoettingen.sub.be.ous.lbs4.proxy.filters.lbs4.LanguageFilter
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Configurable
@@ -25,11 +17,11 @@ class ProxyConfig {
     @Autowired
     String baseUrl
 
-    ProxyConfig () {
+    ProxyConfig() {
 
     }
 
-    public void init () {
+    public void init() {
         //baseUrl = "${scheme}${host}:${port}${application_start}"
         addFilters()
     }
@@ -38,20 +30,12 @@ class ProxyConfig {
         if (filters.get(0) instanceof FilterContainer) {
             FilterContainer fc = filters.get(0)
             //Hook up additional filters fpr debugging here
-
+            /* Example:
+            CssFilter cf = new CssFilter('^http://xgoe.gbv.de:9090.*\\.css$')
+            fc.addFilter(cf)
+            */
         } else {
             throw new IllegalStateException('FilterContainer not configured')
         }
-
-
-        /*
-        CssFilter cf = new CssFilter('\'^http://xgoe.gbv.de:9090.*\\.css$')
-        ufc.addFilter(cf)
-
-        DIV.loginBox
-        ﻿top: 149px; left: 768px;
-        RegExContentFilter gcf4 = new RegExContentFilter('^.*lbsData.*\\.css$', '//xgoe\\.gbv\\.de:9600/servlet/lbsInfo', '//xgoe\\.gbv\\.de:9090/servlet/lbsInfo')
-        */
-
     }
 }
