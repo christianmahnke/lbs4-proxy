@@ -33,7 +33,7 @@ class LBS4Proxy {
         log.info('Starting Proxy server')
         HttpProxyServer server =
                 DefaultHttpProxyServer.bootstrap()
-                        .withPort(8080)
+                        .withPort(pc.getPort())
                         .withFiltersSource(new HttpFiltersSourceAdapter() {
                     @Override
                     public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {

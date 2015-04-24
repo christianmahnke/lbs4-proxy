@@ -9,11 +9,11 @@
 
     <bean id="proxyConfigBean" class="de.unigoettingen.sub.be.ous.lbs4.proxy.ProxyConfig" init-method="init">
         <property name="baseUrl" ref="baseUrl"/>
+        <property name="port" value="8080"/>
         <property name="filters">
             <list>
                 <bean class="de.unigoettingen.sub.be.ous.lbs4.proxy.filters.FilterContainer">
                     <constructor-arg ref="baseUrl"/>
-
                     <property name="filters">
                         <!--
                         Regular expressions in here do not need escaped back slashes! \\ -> \

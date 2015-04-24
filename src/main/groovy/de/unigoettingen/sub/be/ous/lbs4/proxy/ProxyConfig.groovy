@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Configurable
 @Configurable
 class ProxyConfig {
     @Autowired
+    Integer port
+    @Autowired
     List<Filter> filters = new ArrayList<Filter>()
     @Autowired
     String baseUrl
